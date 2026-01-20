@@ -15,8 +15,11 @@ const roboto = Roboto_Condensed({
 });
 
 export const metadata: Metadata = {
-  title: "NF PORTFOLIO | Nittfest",
-  description: "Official Portfolio for NF",
+  title: "NITTFEST '26",
+  description: "The Annual Interdepartmental Cultural Extravaganza of NIT Trichy",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({
