@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Bangers, Roboto_Condensed } from "next/font/google";
 import "./globals.css";
 
@@ -14,9 +14,20 @@ const roboto = Roboto_Condensed({
   variable: "--font-roboto",
 });
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  themeColor: '#D00000',
+};
+
 export const metadata: Metadata = {
-  title: "NF PORTFOLIO | Nittfest",
-  description: "Official Portfolio for NF",
+  title: "NITTFEST '26",
+  description: "The Annual Interdepartmental Cultural Extravaganza of NIT Trichy",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({

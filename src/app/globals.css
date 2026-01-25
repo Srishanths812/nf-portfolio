@@ -9,12 +9,36 @@
 }
 
 @layer base {
-
   html,
   body {
     height: 100%;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Ensure images scale properly on all devices */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Smooth scrolling for better UX */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* Better touch targets for mobile */
+  @media (max-width: 640px) {
+    button,
+    a {
+      min-height: 44px;
+      min-width: 44px;
+    }
   }
 }
