@@ -1,6 +1,6 @@
 
 import Link from "next/link";
-import { Bangers, Roboto_Condensed } from "next/font/google";
+
 
 import './privacy.css';
 
