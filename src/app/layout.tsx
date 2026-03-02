@@ -6,12 +6,14 @@ const bangers = Bangers({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-bangers",
+  display: 'swap',
 });
 
 const roboto = Roboto_Condensed({
   subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-roboto",
+  display: 'swap',
 });
 
 export const viewport: Viewport = {
@@ -37,7 +39,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${bangers.variable} ${roboto.variable} antialiased bg-comic-red`}>
+      <body 
+        className={`${bangers.variable} ${roboto.variable} antialiased bg-comic-red`}
+        style={{ 
+          '--font-bangers': bangers.style.fontFamily,
+          '--font-roboto': roboto.style.fontFamily,
+        } as React.CSSProperties}
+      >
         {children}
       </body>
     </html>

@@ -21,7 +21,7 @@
     width: 100%;
     max-width: 800px;
     position: relative;
-    font-family: var(--font-comic);
+    font-family: var(--font-bangers);
 }
 
 .back-link {
@@ -32,7 +32,7 @@
     color: white;
     padding: 8px 15px;
     text-decoration: none;
-    font-family: var(--font-comic);
+    font-family: var(--font-bangers);
     border: 2px solid var(--color-comic-black);
     box-shadow: 4px 4px 0 var(--color-comic-black);
     font-size: 1.2rem;
@@ -45,7 +45,7 @@
 }
 
 .policy-title {
-    font-family: var(--font-comic);
+    font-family: var(--font-bangers);
     color: var(--color-comic-red);
     font-size: 3.5rem;
     text-align: center;
