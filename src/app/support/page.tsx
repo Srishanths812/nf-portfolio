@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
+import Link from 'next/link';
 import emailjs from '@emailjs/browser';
 import './support.css';
 
@@ -86,6 +87,10 @@ const SupportPage = () => {
                     )}
                 </form>
             </div>
+
+            <Link href="/privacy" className="privacy-btn">
+                PRIVACY POLICY
+            </Link>
         </div>
     );
 };

@@ -276,7 +276,8 @@ export default function Home() {
                   { text: "Sponsors", path: "/sponsors", x: 47.62, y: 52.81, rot: -85, fontSize: "2.5cqw" },
                   { text: "Our Team", path: "/team", x: 60.30, y: 35.43, rot: -2.5, fontSize: "3cqw" },
                   { text: "Contact Us", path: "/contact", x: 73.95, y: 42.81, rot: -90, fontSize: "2.8cqw" },
-                  { text: "Merchandise", path: "/merch", x: 79.80, y: 53.80, rot: -90, fontSize: "2.6cqw" }
+                  { text: "Merchandise", path: "/merch", x: 79.80, y: 53.80, rot: -90, fontSize: "2.6cqw" },
+                  { text: "Support", path: " /support", x: 92.80, y: 61.80, rot: -97, fontSize: "2.6cqw" }
                 ].map((item, i) => (
                   <div
                     key={i}
