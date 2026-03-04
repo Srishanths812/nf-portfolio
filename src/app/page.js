@@ -112,6 +112,29 @@ export default function Home() {
     }
   }, [isMenuOpen]);
 
+  // Detect scroll to open menu
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10 && !isMenuOpen) {
+        setIsMenuOpen(true);
+      }
+    };
+
+    const handleWheel = (e) => {
+      if (e.deltaY > 10 && !isMenuOpen && document.body.style.overflow !== "hidden") {
+        setIsMenuOpen(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("wheel", handleWheel);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("wheel", handleWheel);
+    };
+  }, [isMenuOpen]);
+
   // Toggle function for the hamburger icon
   const toggleMenu = () => {
     setIsMenuOpen(prev => !prev);
