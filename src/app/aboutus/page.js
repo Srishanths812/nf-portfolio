@@ -153,7 +153,7 @@ export default function AboutUs() {
       {/* Torn paper edge at top */}
       <div className="torn-paper-edge" ref={tornPaperRef}>
         <img
-          src="/top-border.png"
+          src="/assets/landingpage/top-border-ups.png"
           alt="Torn Border"
           className="torn-border-img"
         />
@@ -180,15 +180,14 @@ export default function AboutUs() {
 
         {/* Spider-Man section */}
         <div className="spiderman-container">
-          {/* Rope */}
-          <div className="spiderman-rope" ref={ropeRef}></div>
+          {/* Rope */}\
           {/* Spider-Man */}
           <div className="spiderman-character" ref={spidermanRef}>
             <Image
               src="/spiderman.png"
               alt="Spider-Man hanging from web"
               width={240}
-              height={330}
+              height={320}
               priority
             />
           </div>

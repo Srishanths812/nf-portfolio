@@ -95,7 +95,7 @@
 /* ===================== SPIDER-MAN ===================== */
 .spiderman-container {
   position: absolute;
-  top: -20px;
+  top: -28px;
   right: 5%;
   display: flex;
   flex-direction: column;
@@ -206,7 +206,7 @@
 
   .spiderman-container {
     right: 2%;
-    top: 50px;
+    top: 42px;
   }
 
   .speech-bubble {
@@ -253,7 +253,8 @@
     position: relative;
     top: 0;
     right: auto;
-    margin-top: 0px;
+    margin-top: -10px;
+    /* Offset the 10px black box-shadow border of the text box */
   }
 
   .spiderman-rope {
@@ -322,6 +323,11 @@
 
   .spiderman-rope {
     height: 40px;
+  }
+
+  .spiderman-container {
+    margin-top: -7px;
+    /* Offset the 7px black box-shadow border of the text box on very small screens */
   }
 
   .speech-bubble {

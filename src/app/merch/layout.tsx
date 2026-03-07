@@ -17,18 +17,14 @@ export const metadata: Metadata = {
   description: "The Annual Interdepartmental Cultural Extravaganza of NIT Trichy",
 };
 
-export default function RootLayout({
+export default function MerchLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <div className={`merch-page-container ${geistSans.variable} ${geistMono.variable} antialiased`}>
+      {children}
+    </div>
   );
 }

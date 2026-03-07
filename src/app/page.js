@@ -11,12 +11,10 @@ import SponsorsPage from "./sponsors/page";
 
 export default function Home() {
   const router = useRouter();
-  const nittfestTextRef = useRef(null);
   const nfLogoRef = useRef(null);
   const dottedTextureRef = useRef(null);
   const bgRef = useRef(null);
-  const comiRef = useRef(null);
-  const kazeRef = useRef(null);
+  const comikazefRef = useRef(null);
   const mainScrollContainerRef = useRef(null);
 
   // Menu animation refs
@@ -26,7 +24,15 @@ export default function Home() {
   const menuContentRef = useRef(null);
   const tl = useRef(null);
 
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
     // Use manual scroll restoration to prevent jump on refresh
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
@@ -43,81 +49,85 @@ export default function Home() {
       mainScrollContainerRef.current.style.overflowY = "auto";
     }
 
-    // NITTFEST text drops in from top
-    gsap.fromTo(
-      nittfestTextRef.current,
-      { y: -200, opacity: 0 },
-      { y: -10, opacity: 1, duration: 1.2, ease: "power3.out", delay: 0.2 }
-    );
+    let ctx = gsap.context(() => {
+      // Delay animation slightly to ensure DOM is fully laid out by Next.js router
+      requestAnimationFrame(() => {
+        // NF logo fades up from below
+        if (nfLogoRef.current) {
+          gsap.fromTo(
+            nfLogoRef.current,
+            { y: 40, opacity: 0 },
+            { y: 0, opacity: 1, duration: 1.0, ease: "power3.out", delay: 0.7 }
+          );
+        }
 
-    // NF logo fades up from below
-    gsap.fromTo(
-      nfLogoRef.current,
-      { y: 40, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.0, ease: "power3.out", delay: 0.7 }
-    );
+        // Dotted texture fades in after logo
+        if (dottedTextureRef.current) {
+          gsap.fromTo(
+            dottedTextureRef.current,
+            { opacity: 0 },
+            { opacity: 1, duration: 1.0, ease: "power2.out", delay: 0.2 }
+          );
+        }
 
-    // Dotted texture fades in after logo
-    gsap.fromTo(
-      dottedTextureRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 1.0, ease: "power2.out", delay: 0.2 }
-    );
+        // Comikazef drop animation from top
+        if (comikazefRef.current) {
+          gsap.fromTo(
+            comikazefRef.current,
+            { y: -500, opacity: 0 },
+            { y: 0, opacity: 1, duration: 1.0, ease: "back.out(1.7)", delay: 0.5 }
+          );
+        }
+      });
+    });
 
-    // Comifinal and Kazefinal collision animation
-    gsap.fromTo(
-      comiRef.current,
-      { xPercent: -200, yPercent: -50, opacity: 0 },
-      { xPercent: -95, yPercent: -50, opacity: 1, duration: 0.8, ease: "power3.out", delay: 0.3 }
-    );
-    gsap.fromTo(
-      kazeRef.current,
-      { xPercent: 100, yPercent: -50, opacity: 0 },
-      { xPercent: -5, yPercent: -50, opacity: 1, duration: 0.8, ease: "power3.out", delay: 0.3 }
-    );
-  }, []);
+    return () => ctx.revert();
+  }, [mounted]);
 
   useEffect(() => {
-    // Initialize the GSAP timeline
-    tl.current = gsap.timeline({ paused: true });
+    let ctx = gsap.context(() => {
+      // Initialize the GSAP timeline
+      tl.current = gsap.timeline({ paused: true });
 
-    tl.current
-      // 1. Show the menu container
-      .set(menuContainerRef.current, { zIndex: 60, opacity: 1, pointerEvents: "auto" })
-      // 2. Animate the tower in from the left
-      .fromTo(towerRef.current, { x: "-150%" }, {
-        x: 0,
-        duration: 0.8,
-        ease: "power3.out"
-      })
-      // 3. Lightning effects flicker and stay
-      .fromTo(
-        ".lightning-effect",
-        { opacity: 0 },
-        {
-          keyframes: [
-            { opacity: 0.8, duration: 0.05 },
-            { opacity: 0.1, duration: 0.05 },
-            { opacity: 0.9, duration: 0.05 },
-            { opacity: 0.2, duration: 0.05 },
-            { opacity: 0.8, duration: 0.3 }
-          ],
-          stagger: 0.1
-        },
-        "-=0.6"
-      )
-      // 4. Animate the menu content sliding in from the RIGHT
-      .fromTo(menuContentRef.current,
-        { x: "100vw", opacity: 0 },
-        {
+      tl.current
+        // 1. Show the menu container
+        .set(menuContainerRef.current, { zIndex: 60, opacity: 1, pointerEvents: "auto" })
+        // 2. Animate the tower in from the left
+        .fromTo(towerRef.current, { x: "-150%" }, {
           x: 0,
-          opacity: 1,
           duration: 0.8,
-          ease: "back.out(1.2)"
-        },
-        "-=0.4"
-      );
+          ease: "power3.out"
+        })
+        // 3. Lightning effects flicker and stay
+        .fromTo(
+          ".lightning-effect",
+          { opacity: 0 },
+          {
+            keyframes: [
+              { opacity: 0.8, duration: 0.05 },
+              { opacity: 0.1, duration: 0.05 },
+              { opacity: 0.9, duration: 0.05 },
+              { opacity: 0.2, duration: 0.05 },
+              { opacity: 0.8, duration: 0.3 }
+            ],
+            stagger: 0.1
+          },
+          "-=0.6"
+        )
+        // 4. Animate the menu content sliding in from the RIGHT
+        .fromTo(menuContentRef.current,
+          { x: "100vw", opacity: 0 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "back.out(1.2)"
+          },
+          "-=0.4"
+        );
+    });
 
+    return () => ctx.revert();
   }, []);
 
   useEffect(() => {
@@ -146,14 +156,14 @@ export default function Home() {
   };
 
   return (
-    <div id="main-scroll-container" ref={mainScrollContainerRef} className="relative w-full snap-y snap-mandatory h-screen overflow-y-auto overflow-x-hidden scroll-smooth">
+    <div id="main-scroll-container" ref={mainScrollContainerRef} className="relative w-full h-screen overflow-y-auto overflow-x-hidden scroll-smooth">
       {/* Persisting UI Elements */}
       {/* Top Left NF Logo */}
-      <div className="fixed top-8 left-8 z-100 cursor-pointer hover:scale-110 transition-transform duration-200">
+      <div className="fixed top-4 left-4 md:top-8 md:left-8 z-100 cursor-pointer hover:scale-110 transition-transform duration-200">
         <img
           src="/assets/landingpage/nf3dsvg.svg"
           alt="NF Logo"
-          className="w-12 h-12 md:w-16 md:h-16 drop-shadow-lg"
+          className="w-10 h-10 md:w-16 md:h-16 drop-shadow-lg"
           onClick={() => {
             if (mainScrollContainerRef.current) {
               mainScrollContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
@@ -162,65 +172,51 @@ export default function Home() {
         />
       </div>
 
-      {/* Thanos Hand Snap Hamburger Menu Button */}
+      {/* Hamburger Menu Button */}
       <div
         className="absolute top-8 right-8 z-100 cursor-pointer hover:scale-110 transition-transform duration-200 pointer-events-auto"
         onClick={toggleMenu}
       >
         <img
-          src="/assets/landingpage/hamburger/thanos-handsnap.svg"
+          src="/assets/landingpage/hamburger-real.svg"
           alt="Menu"
           className="w-12 h-12 md:w-16 md:h-16 drop-shadow-lg"
         />
       </div>
 
-      <main id="home" className="relative min-h-screen w-full shrink-0 snap-start bg-[#BC1D1A]">
+      <main id="home" className="relative h-screen w-full flex flex-col items-center overflow-hidden">
         {/* 1. Full Width Landing Page Asset */}
-        <div className="relative w-full overflow-hidden">
+        <div className="relative w-full h-full overflow-hidden">
 
+          {/* Wrapper for image so it animates and scales alone */}
           {/* Wrapper for image so it animates and scales alone */}
           <div
             ref={bgRef}
-            className="relative w-full h-auto block transform translate-x-[70px] scale-110 origin-right"
+            className="relative w-full h-full block transform origin-right overflow-hidden"
           >
             <img
               src="/assets/landingpage/landingggg.jpeg"
               alt="NITTFEST Landing Page"
-              className="w-full h-auto block"
+              className="w-full h-full object-cover object-center md:object-bottom-right block"
             />
           </div>
 
-          {/* NITTFEST Text SVG — top centre overlay */}
-          <div className="absolute top-[20px] left-0 right-0 flex flex-col items-center pointer-events-none gap-2">
-            <h1
-              ref={nittfestTextRef}
-              className="neon-text font-orbitron text-[clamp(40px,8vw,100px)] font-black tracking-[0.1em] md:tracking-[0.2em] uppercase whitespace-nowrap"
-            >
-              N I T T F E S T
-            </h1>
-            <img
-              ref={comiRef}
-              src="/assets/landingpage/comifinal.png"
-              alt="Comi"
-              className="absolute top-[291%] left-[48.8%] w-[400px] z-50 pointer-events-none opacity-0"
-            />
-            <img
-              ref={kazeRef}
-              src="/assets/landingpage/kazefinal.png"
-              alt="Kaze"
-              className="absolute top-[275%] left-[51%] w-[445px] z-50 pointer-events-none opacity-0"
-            />
-
-            <h2
-              className="absolute top-[330%] left-1/2 transform -translate-x-1/2 text-black font-bangers text-3xl md:text-5xl tracking-wider z-50"
-              style={{
-                textShadow: "0 0 5px #fff, 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #fff, 0 0 80px #fff"
-              }}
-            >
-              MARCH 13-15
-            </h2>
 
 
+          {/* Comic Characters and Date — Centered on screen */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none pt-[5vh]">
+            <div className="relative w-full max-w-[1200px] h-[50vh] flex items-center justify-center">
+              <img
+                ref={comikazefRef}
+                src="/assets/landingpage/comikazef.png"
+                alt="ComiKaze"
+                className="absolute left-[50%] top-[-35%] w-[90vw] md:w-[800px] z-50 pointer-events-none opacity-0"
+                style={{ transform: 'translate(-50%, -50%)' }}
+              />
+              <h2 className="absolute top-[-18%] left-1/2 transform -translate-x-1/2 text-[#5D1F1A] font-bangers text-2xl md:text-6xl drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)] tracking-wider z-50 text-center w-full px-4">
+                MARCH 13-15
+              </h2>
+            </div>
           </div>
 
         </div>
@@ -260,45 +256,45 @@ export default function Home() {
           {/* Content Wrapper */}
           <div className="relative h-full w-full flex items-end justify-start z-20 p-0 pointer-events-none">
 
-            {/* Avengers Tower Sliding in from Left (Sizes strictly to contents to prevent wide invisible gap) */}
+            {/* Avengers Tower Sliding in from Left */}
             <div
               ref={towerRef}
-              className="relative h-[95vh] md:h-screen max-w-[45vw] lg:max-w-[40vw] shrink-0 z-30 pointer-events-auto"
+              className="absolute left-0 bottom-0 h-[120vh] lg:h-screen max-w-[90vw] lg:max-w-[40vw] shrink-0 z-30 pointer-events-none hidden lg:flex items-end"
             >
               <img
                 src="/assets/landingpage/hamburger/Avengerstowerironman.svg"
                 alt="Avengers Tower"
-                className="h-full w-auto object-contain object-bottom-left drop-shadow-2xl"
+                className="h-full w-auto object-contain object-bottom-left drop-shadow-2xl scale-125 md:scale-100 origin-bottom-left pointer-events-auto"
               />
             </div>
 
             {/* Hamburger Menu Content Sliding in from the RIGHT */}
             <div
               ref={menuContentRef}
-              className="relative z-20 flex-1 h-full overflow-x-auto overflow-y-hidden pointer-events-auto items-center flex"
+              className="relative z-20 w-full h-full overflow-x-auto overflow-y-hidden pointer-events-auto items-center flex"
             >
-              {/* Reduced left padding so the menu is snug against the tower edge */}
-              <div className="min-w-max pr-[20vw] pl-2 md:pl-4 h-full flex items-center">
+              {/* Added left padding so menu starts peeking out behind tower but can scroll fully left */}
+              <div className="min-w-max pr-[5vw] lg:pr-[5vw] pl-2 lg:pl-[25vw] h-full flex items-center">
                 <div
-                  className="relative h-[60vh] md:h-[85vh] ml-6 md:ml-10 shrink-0"
+                  className="relative w-[150vw] md:w-[120vw] lg:w-auto lg:h-[85vh] ml-2 lg:ml-10 shrink-0"
                   style={{ aspectRatio: "1451 / 811", containerType: "inline-size" }}
                 >
                   <img
                     src="/assets/landingpage/hamburger/hamburgermenu.svg"
                     alt="Hamburger Menu Options"
-                    className="absolute inset-0 w-full h-full object-contain drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]"
+                    className="absolute inset-0 w-full h-full object-cover drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]"
                   />
 
                   {[
-                    { text: "Home", id: "home", x: 7.16, y: 34.55, rot: -3.8, fontSize: "2.5cqw" },
-                    { text: "Highlights", id: "highlights", x: 17.02, y: 49.56, rot: 270, fontSize: "3cqw" },
-                    { text: "About US", id: "aboutus", x: 29.84, y: 33.56, rot: 3.3, fontSize: "3cqw" },
-                    { text: "Events", id: "events", x: 42.59, y: 45.81, rot: -87, fontSize: "2.5cqw" },
-                    { text: "Sponsors", id: "sponsors", x: 47.62, y: 52.81, rot: -85, fontSize: "2.5cqw" },
-                    { text: "Our Team", path: "/team", x: 60.30, y: 35.43, rot: -2.5, fontSize: "3cqw" },
-                    { text: "Contact Us", path: "/contact", x: 73.95, y: 42.81, rot: -90, fontSize: "2.8cqw" },
-                    { text: "Merchandise", path: "/merch", x: 79.80, y: 53.80, rot: -90, fontSize: "2.6cqw" },
-                    { text: "Support", path: "/support", x: 92.80, y: 61.80, rot: -97, fontSize: "2.6cqw" }
+                    { text: "Home", id: "home", x: 7.16, y: 34.55, rot: -3.8, fontSize: "clamp(12px, 2.5cqw, 30px)" },
+                    { text: "Highlights", id: "highlights", x: 17.02, y: 49.56, rot: 270, fontSize: "clamp(14px, 3cqw, 35px)" },
+                    { text: "About US", id: "aboutus", x: 29.84, y: 33.56, rot: 3.3, fontSize: "clamp(14px, 3cqw, 35px)" },
+                    { text: "Events", id: "events", x: 42.59, y: 45.81, rot: -87, fontSize: "clamp(12px, 2.5cqw, 30px)" },
+                    { text: "Sponsors", id: "sponsors", x: 47.62, y: 52.81, rot: -85, fontSize: "clamp(12px, 2.5cqw, 30px)" },
+                    { text: "Our Team", path: "/team", x: 60.30, y: 35.43, rot: -2.5, fontSize: "clamp(14px, 3cqw, 35px)" },
+                    { text: "Contact Us", path: "/contact", x: 73.95, y: 42.81, rot: -90, fontSize: "clamp(12px, 2.8cqw, 32px)" },
+                    { text: "Merchandise", path: "/merch", x: 79.80, y: 53.80, rot: -90, fontSize: "clamp(12px, 2.6cqw, 30px)" },
+                    { text: "Support", path: "/support", x: 92.80, y: 61.80, rot: -97, fontSize: "clamp(12px, 2.6cqw, 30px)" }
                   ].map((item, i) => (
                     <div
                       key={i}
@@ -322,39 +318,39 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Absolute close button mimicking the thanos snap inside the menu, or just relying on backdrop click */}
+          {/* Absolute close button inside the menu */}
           <div
             className={`absolute top-8 right-8 z-100 cursor-pointer hover:scale-110 transition-all duration-300 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
             onClick={toggleMenu}
           >
             <img
-              src="/assets/landingpage/hamburger/thanos-handsnap.svg"
+              src="/assets/landingpage/hamburger-real.svg"
               alt="Close Menu"
-              className="w-12 h-12 md:w-16 md:h-16 drop-shadow-lg"
+              className="w-12 h-12 md:w-16 md:h-16 drop-shadow-lg brightness-0 invert"
             />
           </div>
         </div>
 
       </main>
 
-      <section id="aboutus" className="relative w-full h-screen shrink-0 snap-start">
+      <section id="aboutus" className="relative w-full min-h-screen">
         <AboutUs />
       </section>
 
-      <section id="highlights" className="relative w-full min-h-screen shrink-0 snap-start">
+      <section id="highlights" className="relative w-full min-h-screen">
         <HighlightsPage />
       </section>
 
-      <section id="events" className="relative w-full h-screen shrink-0 snap-start">
+      <section id="events" className="relative w-full min-h-screen">
         <NITTFESTEvents />
       </section>
 
-      <section id="sponsors" className="relative w-full min-h-screen shrink-0 snap-start">
+      <section id="sponsors" className="relative w-full min-h-screen">
         <SponsorsPage />
       </section>
 
       {/* Footer Section */}
-      <footer className="w-full bg-black py-4 px-8 flex flex-col md:flex-row items-center justify-center gap-4 shrink-0 snap-end z-50 text-white font-orbitron border-t-2 border-nf-red">
+      <footer className="w-full bg-black py-4 px-8 flex flex-col md:flex-row items-center justify-center gap-4 z-50 text-white font-orbitron border-t-2 border-nf-red">
         <p className="text-sm md:text-base opacity-80 tracking-widest text-center">
           MADE BY NITTFEST WEBOPS
         </p>

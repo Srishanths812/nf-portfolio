@@ -68,7 +68,7 @@ export default function NITTFESTEvents() {
   return (
     <main
       ref={containerRef}
-      className="relative w-screen h-screen overflow-hidden"
+      className="relative w-screen min-h-screen"
     >
       {/* Background Image */}
       <img
@@ -77,7 +77,7 @@ export default function NITTFESTEvents() {
         className="absolute inset-0 w-full h-full object-cover z-0"
       />
       {/* 1. EVENTS TEXT */}
-      <div className="absolute top-8 left-12 z-20 w-[25%] max-w-[350px]">
+      <div className="absolute top-8 left-1/2 -translate-x-1/2 md:left-12 md:translate-x-0 z-20 w-[60%] md:w-[25%] max-w-[350px]">
         <div ref={eventsRef}>
           <img
             src="/EVENTS_TEXT.svg"
@@ -88,8 +88,8 @@ export default function NITTFESTEvents() {
       </div>
 
       {/* 2. IRON MAN */}
-      <div className="absolute bottom-4 left-12 z-10 w-[40%] h-[75%] flex justify-center items-end pointer-events-none">
-        <div ref={ironmanRef} className="w-full h-full flex justify-center items-end">
+      <div className="absolute bottom-[2%] md:bottom-[5%] left-1/2 -translate-x-1/2 md:left-[10%] md:translate-x-0 z-10 w-[50%] md:w-[30%] h-[40%] md:h-[60%] flex justify-center md:justify-start items-end pointer-events-none">
+        <div ref={ironmanRef} className="w-full h-full flex justify-center md:justify-start items-end">
           <img
             src="/Ironman.png"
             alt="Ironman"
@@ -99,16 +99,16 @@ export default function NITTFESTEvents() {
       </div>
 
       {/* 3. BOOK COVER */}
-      <div className="absolute top-1/2 right-12 translate-x-[-120px] translate-y-[calc(-50%-35px)] scale-[1.25] z-30 w-[50%] h-[95%] flex items-center justify-center">
-        <div ref={bookRef} className="h-full w-full flex justify-center">
+      <div className="absolute top-[10%] md:top-[12%] left-1/2 -translate-x-1/2 md:left-auto md:right-[10%] md:translate-x-0 scale-[1.25] md:scale-[1.35] z-30 w-[85%] md:w-[50%] h-[50%] md:h-[80%] flex items-center md:items-start justify-center md:justify-end">
+        <div ref={bookRef} className="h-full w-full flex justify-center md:justify-end">
           <button
             onClick={() => setIsOpen(true)}
-            className="relative h-full w-full flex justify-center transition-transform hover:scale-105 active:scale-95 duration-500"
+            className="relative h-full w-full flex justify-center md:justify-end transition-transform hover:scale-105 active:scale-95 duration-500"
           >
             <img
               src="/Book_cover.svg"
               alt="NITTFEST Archive"
-              className="h-[90%] w-auto max-w-full object-contain drop-shadow-[50px_50px_100px_rgba(0,0,0,0.9)] rounded-r-[2rem]"
+              className="h-full w-auto max-w-full object-contain drop-shadow-[50px_50px_100px_rgba(0,0,0,0.9)] rounded-r-4xl"
             />
           </button>
         </div>
@@ -119,7 +119,7 @@ export default function NITTFESTEvents() {
         <div ref={buttonRef}>
           <button
             onClick={() => setIsOpen(true)}
-            className="px-10 py-5 bg-[#FFD700] text-black font-black italic uppercase tracking-[0.15em] text-xl border-t-4 border-l-4 border-black rounded-tl-2xl hover:bg-white transition-colors duration-300"
+            className="px-6 py-3 md:px-10 md:py-5 bg-[#FFD700] text-black font-black italic uppercase tracking-[0.15em] text-sm md:text-xl border-t-4 border-l-4 border-black rounded-tl-2xl hover:bg-white transition-colors duration-300"
           >
             Click the Book to Open
           </button>
@@ -132,7 +132,7 @@ export default function NITTFESTEvents() {
 
           <button
             onClick={() => setIsOpen(false)}
-            className="absolute top-8 right-8 text-white bg-white/10 w-14 h-14 rounded-full flex items-center justify-center text-2xl hover:bg-white hover:text-black transition-all z-[60]"
+            className="absolute top-8 right-8 text-white bg-white/10 w-14 h-14 rounded-full flex items-center justify-center text-2xl hover:bg-white hover:text-black transition-all z-60"
           >
             ✕
           </button>
