@@ -18,7 +18,7 @@
 
 /* ===================== PAGE LAYOUT ===================== */
 .team-page {
-    position: relative;
+    position: relative; 
     width: 100%;
     min-height: 100vh;
     /* Multi-colored horizontal gradients matching the image */
@@ -57,21 +57,25 @@
     background: #e921d9;
     /* Deep hot pink matching reference */
     color: #000;
-    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.8);
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5);
     font-family: 'Anime Ace 2.0 BB', 'Anime Ace 2.0', 'Anime Ace', 'Bangers', sans-serif;
     /* Setup fallback map */
     font-weight: bold;
     font-style: italic;
     transform: rotate(-1deg);
-    border: 3px solid #000;
+    border: 2px solid #000;
     border-radius: 0;
     padding: 12px 20px;
     white-space: nowrap;
 }
 
 .alert-bubble {
-    top: 5%;
-    right: 5%;
+    top: 6%;
+    right: 4%;              /* simple responsive offset */
+    padding: 16px 24px;     /* ensures text fits comfortably */
+    width: fit-content;     /* bubble grows with text */
+    max-width: 85vw;        /* prevents overflow on phones */
+
     border-radius: 20px;
     font-family: 'Anime Ace 2.0 BB', 'Anime Ace 2.0', 'Bebas Neue', sans-serif;
     font-style: italic;
@@ -118,6 +122,7 @@
     font-weight: bold;
 }
 
+/*
 .webops-bubble::after {
     content: '';
     position: absolute;
@@ -142,15 +147,15 @@
     border-top: 14px solid #fff;
     z-index: 1;
 }
+*/
 
 /* ===================== WINDOWS CONTAINER ===================== */
 .windows-container {
     position: relative;
-    width: 90%;
+    width: 92%;
     max-width: 1200px;
-    margin: 80px auto 50px auto;
-    height: 700px;
-    z-index: 10;
+    margin: 80px auto 60px auto;
+    min-height: 700px;
 }
 
 /* ===================== GENERIC UI WINDOW ===================== */
@@ -158,7 +163,7 @@
     position: absolute;
     background: #e6e6e6;
     /* Gray background for windows */
-    border: 4px solid #000;
+    border: 3px solid #000;
     box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
@@ -167,7 +172,7 @@
 .window-header {
     background: #b0b0b0;
     /* Darker gray header */
-    border-bottom: 4px solid #000;
+    border-bottom: 3px solid #000;
     padding: 8px 15px;
     display: flex;
     align-items: center;
@@ -199,10 +204,13 @@
     background: #27c93f;
 }
 
+
 .window-title {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.9rem;
-    font-weight: bold;
+    font-family: inherit;      /* uses Barlow Condensed */
+    font-size: 1rem;         /* bigger than content */
+    letter-spacing: 2px;       /* more spacing for header */
+    color: #000000; 
+    font-weight: bold;              
 }
 
 .window-close-btn {
@@ -224,8 +232,8 @@
 .top-window {
     top: 0;
     left: 5%;
-    width: 90%;
-    height: 150px;
+    width: 95%;
+    height: 650px;
     z-index: 1;
 }
 
@@ -242,7 +250,7 @@
 /* Main Window (Middle) */
 .main-window {
     top: 100px;
-    left: 10%;
+    left: 15%;
     width: 80%;
     height: 600px;
     z-index: 2;
@@ -290,32 +298,43 @@
     color: #000;
 }
 
+.source-ip {
+    font-size: 1.5rem;       
+    font-weight: 400;          
+    letter-spacing: 1px;       
+    display: inline-block;
+    transform: scaleX(1.05);   
+    
+    position: relative;        
+    top: -5px;                  
+}
+
 /* ===================== ID CARD ===================== */
 .id-card {
-    width: 600px;
+    width: min(660px, 92vw);
     height: 340px;
-    background: #bcc8da;
+    background: #c5ccdb;
     /* Light grayish blue tint */
-    border: 4px solid #000;
+    border: 3px solid #000;
     border-radius: 6px;
     transform: rotate(-3deg);
-    box-shadow:
-        6px 6px 0 rgba(0, 0, 0, 0.8),
-        inset 0 0 50px rgba(255, 255, 255, 0.4);
     display: flex;
     overflow: hidden;
+    box-shadow:
+        10px 10px 0 rgba(0,0,0,0.35),
+        inset 0 0 40px rgba(255,255,255,0.4);
 }
 
 .id-card-inner {
     display: flex;
     width: 100%;
     height: 100%;
-    padding: 20px;
+    padding: 32px;
     position: relative;
 }
 
 .id-photo-section {
-    width: 40%;
+    width: 28%;
     height: 100%;
     display: flex;
     align-items: flex-end;
@@ -331,12 +350,15 @@
     display: flex;
     align-items: flex-end;
     justify-content: center;
+    border: 3px solid #000;
+    border-radius: 4px;
 }
 
 .photo-placeholder img {
-    max-height: 100%;
-    width: auto;
-    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: rotate(4deg) scale(1.01) translate(7px, 9px);
 }
 
 .person-silhouette {
@@ -349,8 +371,8 @@
 }
 
 .id-details-section {
-    width: 60%;
-    padding-left: 25px;
+    width: 72%;
+    padding-left: 8px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -358,21 +380,23 @@
 
 .id-header {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 25px;
+    align-items: flex-start;   /* keeps text top-aligned with logo */
+    justify-content: flex-start;
+    gap: 3px;                 /* smaller gap between logo and text */
+    flex-wrap: wrap;
 }
 
 .webops-logo {
-    width: 100%;
-    max-width: 250px;
+    width: auto;
+    max-width: 250px;         /* keep logo big */
     height: auto;
     object-fit: contain;
+    transform: rotate(3.5deg);
 }
 
 .access-title {
     font-family: 'Ethnocentric', sans-serif;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     font-weight: normal;
     margin-bottom: 20px;
     margin-left: 5px;
@@ -380,11 +404,23 @@
 }
 
 .member-info p {
+    display: flex;
+    gap: 10px;
     font-family: 'Ethnocentric', sans-serif;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: normal;
-    margin: 8px 0;
+    margin: 5px 0;
     letter-spacing: 1px;
+}
+
+.label {
+    width: 110px;
+    flex-shrink: 0;
+}
+
+.value {
+    flex: 1;
+    white-space: nowrap;
 }
 
 .barcode {
@@ -409,7 +445,7 @@
 
 .scanning-logs p {
     margin: 4px 0;
-    color: #333;
+    color: #000000;
 }
 
 .clearance-level {
@@ -430,7 +466,7 @@
 .block {
     width: 60px;
     height: 15px;
-    background: #666;
+    background: #2b2a2a;
 }
 
 .clearance-level p {
@@ -441,7 +477,7 @@
 /* Terminal Window (Left) */
 .terminal-window {
     top: 450px;
-    left: 0;
+    left: -130px;   /* moves 20px more to the left */
     width: 320px;
     height: 200px;
     z-index: 3;
@@ -453,21 +489,24 @@
 }
 
 .terminal-header .window-title {
-    font-size: 0.8rem;
+    font-size: 1rem;
 }
 
 .terminal-content {
     background: #e6e6e6;
-    padding: 15px;
-    font-family: 'Space Mono', monospace;
+    padding: 10px;
+    font-family: inherit;
     font-weight: bold;
-    font-size: 0.85rem;
+    font-size: 1rem;
     height: 100%;
+    letter-spacing: 2px; 
 }
 
 .terminal-content p {
     margin: 8px 0;
 }
+
+
 
 /* ===================== DESKTOP INDICATOR ===================== */
 /* ===================== DESKTOP INDICATOR ===================== */
@@ -518,6 +557,14 @@
         white-space: normal;
         max-width: 200px;
     }
+    
+    .member-info,.member-info .label,.member-info .value {
+        font-size: 0.8rem;
+    }
+
+    .member-info .value {
+        white-space: normal;
+    }
 
     .alert-bubble {
         top: 10px;
@@ -532,14 +579,19 @@
     }
 
     .windows-container {
-        margin-top: 120px;
+        margin-top: 170px;
     }
 
     .top-window {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
         height: auto;
         min-height: 120px;
+        margin-bottom: 15px
     }
-
+    
     .top-window-content {
         flex-direction: column;
         gap: 10px;
@@ -547,7 +599,10 @@
     }
 
     .main-window {
-        top: 150px;
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
         height: auto;
         min-height: 600px;
     }
@@ -558,38 +613,47 @@
     }
 
     .arrow {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 
     .id-card {
+        width: 80%;
+        max-width: 300px;
         height: auto;
-        min-height: 480px;
         transform: rotate(0deg);
-        /* Remove tilt on mobile to fit nicely */
+        /* min-height: auto; */
+        min-height: 0;      /* ensures no leftover minimum space */
+        display: flex;      /* keep inner flex layout */
+        flex-direction: column; /* stack photo + details vertically */
+        justify-content: flex-start;
     }
 
     .id-card-inner {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        gap: 15px;
+        gap: 8px;
+        padding: 8px;
+
+        display: flex;
+               
     }
 
     .id-photo-section {
-        width: 100%;
+        width: auto;
         height: auto;
         justify-content: center;
     }
 
     .id-details-section {
-        width: 100%;
+        width: auto;
         padding-left: 0;
         align-items: center;
     }
 
     .photo-placeholder {
-        width: 140px;
-        height: 180px;
+        width: 110px;
+        height: 140px;
     }
 
     .barcode {
@@ -597,16 +661,39 @@
         margin-left: 0;
     }
 
+    .id-photo-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .barcode {
+        display: none;
+    }
+
     .server-status {
         flex-direction: column;
         align-items: center;
         gap: 15px;
         margin-top: 30px;
-        text-align: center;
+        text-align: left;
     }
 
     .clearance-level {
         align-items: center;
+    }
+
+    .pink-box {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 90%;
+        max-width: 320px;
+        margin: 10px auto;
+    }
+
+    .window {
+        margin-bottom: 15px;
     }
 
     .terminal-window {
@@ -616,6 +703,46 @@
         width: 100%;
         margin-top: 50px;
         margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .id-header {
+        order: 0; /* move to first */
+        justify-content: center;
+        width: 100%;
+    }
+
+    .id-photo-section {
+        order: 1;
+        width: auto;
+        height: auto;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .id-details-section {
+        order: 2;
+        width: auto;
+        padding-left: 0;
+        align-items: center;
+        text-align: center;
+    }
+
+    .webops-logo {
+        order: 0; /* redundant but safe */
+        max-width: 200px;
+        transform: rotate(4deg);
+    }
+
+    .source-ip {
+        font-size: 1.2rem;
+        top: -3px;  
+    }
+
+    .access-title {
+        font-size: 0.9rem;
     }
 
     .desktop-indicator {

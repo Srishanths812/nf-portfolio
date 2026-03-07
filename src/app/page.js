@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import gsap from "gsap";
 import HighlightsPage from "./highlights/page";
 import AboutUs from "./aboutus/page";
@@ -276,7 +275,7 @@ export default function Home() {
               {/* Added left padding so menu starts peeking out behind tower but can scroll fully left */}
               <div className="min-w-max pr-[5vw] lg:pr-[5vw] pl-2 lg:pl-[25vw] h-full flex items-center">
                 <div
-                  className="relative w-[150vw] md:w-[120vw] lg:w-auto lg:h-[85vh] ml-2 lg:ml-10 shrink-0"
+                  className="relative w-[230vw] md:w-[120vw] lg:w-auto lg:h-[85vh] ml-2 lg:ml-10 shrink-0"
                   style={{ aspectRatio: "1451 / 811", containerType: "inline-size" }}
                 >
                   <img
@@ -286,19 +285,19 @@ export default function Home() {
                   />
 
                   {[
-                    { text: "Home", id: "home", x: 7.16, y: 34.55, rot: -3.8, fontSize: "clamp(12px, 2.5cqw, 30px)" },
-                    { text: "Highlights", id: "highlights", x: 17.02, y: 49.56, rot: 270, fontSize: "clamp(14px, 3cqw, 35px)" },
-                    { text: "About US", id: "aboutus", x: 29.84, y: 33.56, rot: 3.3, fontSize: "clamp(14px, 3cqw, 35px)" },
-                    { text: "Events", id: "events", x: 42.59, y: 45.81, rot: -87, fontSize: "clamp(12px, 2.5cqw, 30px)" },
-                    { text: "Sponsors", id: "sponsors", x: 47.62, y: 52.81, rot: -85, fontSize: "clamp(12px, 2.5cqw, 30px)" },
-                    { text: "Our Team", path: "/team", x: 60.30, y: 35.43, rot: -2.5, fontSize: "clamp(14px, 3cqw, 35px)" },
-                    { text: "Contact Us", path: "/contact", x: 73.95, y: 42.81, rot: -90, fontSize: "clamp(12px, 2.8cqw, 32px)" },
-                    { text: "Merchandise", path: "/merch", x: 79.80, y: 53.80, rot: -90, fontSize: "clamp(12px, 2.6cqw, 30px)" },
-                    { text: "Support", path: "/support", x: 92.80, y: 61.80, rot: -97, fontSize: "clamp(12px, 2.6cqw, 30px)" }
+                    { text: "Home", id: "home", x: 7.16, y: 34.55, rot: -3.8, fontSize: "clamp(18px, 3cqw, 30px)" },
+                    { text: "Highlights", id: "highlights", x: 17.02, y: 49.56, rot: 270, fontSize: "clamp(18px, 3.5cqw, 35px)" },
+                    { text: "About US", id: "aboutus", x: 29.84, y: 33.56, rot: 3.3, fontSize: "clamp(18px, 3.5cqw, 35px)" },
+                    { text: "Events", id: "events", x: 42.59, y: 45.81, rot: -87, fontSize: "clamp(18px, 3cqw, 30px)" },
+                    { text: "Sponsors", id: "sponsors", x: 47.62, y: 52.81, rot: -85, fontSize: "clamp(18px, 3cqw, 30px)" },
+                    { text: "Our Team", path: "/team", x: 60.30, y: 35.43, rot: -2.5, fontSize: "clamp(22px, 3.5cqw, 35px)" },
+                    { text: "Contact Us", path: "/contact", x: 73.95, y: 42.81, rot: -90, fontSize: "clamp(18px, 3.2cqw, 32px)" },
+                    { text: "Merchandise", path: "/merch", x: 79.80, y: 53.80, rot: -90, fontSize: "clamp(18px, 3cqw, 30px)" },
+                    { text: "Support", path: "/support", x: 92.80, y: 61.80, rot: -97, fontSize: "clamp(18px, 3cqw, 30px)" }
                   ].map((item, i) => (
                     <div
                       key={i}
-                      onClick={() => item.path ? router.push(item.path) : scrollToSection(item.id)}
+                      onClick={() => item.path ? (window.location.href = item.path) : scrollToSection(item.id)}
                       className="absolute text-white comic-text font-bold text-center cursor-pointer transition-colors duration-300 hover:text-yellow-400 z-10 whitespace-pre-line"
                       style={{
                         left: `${item.x}%`,
@@ -355,12 +354,12 @@ export default function Home() {
           MADE BY NITTFEST WEBOPS
         </p>
         <div className="hidden md:block w-px h-4 bg-white opacity-40"></div>
-        <Link
+        <a
           href="/contact"
           className="text-sm md:text-base text-nf-red-bright hover:text-white transition-colors duration-300 font-bold uppercase tracking-widest"
         >
           Contact Us
-        </Link>
+        </a>
       </footer>
     </div>
   );

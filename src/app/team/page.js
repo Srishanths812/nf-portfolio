@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import gsap from "gsap";
 import { Libre_Barcode_39 } from "next/font/google";
@@ -13,14 +12,145 @@ const barcodeFont = Libre_Barcode_39({
     display: 'swap',
 });
 
+import { Barlow_Condensed } from "next/font/google";
+
+const barlowCondensed = Barlow_Condensed({
+    weight: ['400'],  // use only 400 for thin text
+    subsets: ['latin'],
+    display: 'swap',
+});
+
 // Temporary placeholder data
 const teamMembers = [
     {
-        name: "SANJAI",
+        name: "THARUN AADESH",
+        role: "OVERALL COORDINATOR",
+        image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
+        barcode: "*NITTFESTWEBOPS*"
+    },
+    {
+        name: "KETHAN REDDY",
+        role: "CHAIRPERSON",
+        image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
+        barcode: "*NITTFESTWEBOPS*"
+    },
+    {
+        name: "SAICHARAN",
+        role: "TREASURER",
+        image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
+        barcode: "*NITTFESTWEBOPS*"
+    },
+    {
+        name: "NAMAN KUMAR",
+        role: "GENERAL SECRETARY",
+        image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
+        barcode: "*NITTFESTWEBOPS*"
+    },
+    {
+        name: "SANJAI KUMAR",
+        team: "WebOps",
         role: "HEAD",
         image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
         barcode: "*NITTFESTWEBOPS*"
-    }
+    },
+    {
+        name: "AMITESH",
+        team: "WebOps",
+        role: "HEAD",
+        image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
+        barcode: "*NITTFESTWEBOPS*"
+    },
+    {
+        name: "VARUN HARSHA",
+        team: "PAIN",
+        role: "HEAD",
+        image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
+        barcode: "*NITTFESTWEBOPS*"
+    },
+    {
+        name: "RAHUL PANDIYAN",
+        team: "DESIGN",
+        role: "HEAD",
+        image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
+        barcode: "*NITTFESTWEBOPS*"
+    },
+    {
+        name: "ANGELINE INIYA",
+        team: "DESIGN",
+        role: "HEAD",
+        image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
+        barcode: "*NITTFESTWEBOPS*"
+    },
+    {
+        name: "SUDHARSHANARAM",
+        team: "EVENTS",
+        role: "HEAD",
+        image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
+        barcode: "*NITTFESTWEBOPS*"
+    },
+    {
+        name: "ROSHINI",
+        team: "EVENTS",
+        role: "HEAD",
+        image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
+        barcode: "*NITTFESTWEBOPS*"
+    },
+    {
+        name: "VENKAT",
+        team: "MARKETING",
+        role: "HEAD",
+        image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
+        barcode: "*NITTFESTWEBOPS*"
+    },
+    {
+        name: "VARUN CHANDAR",
+        team: "MARKETING",
+        role: "HEAD",
+        image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
+        barcode: "*NITTFESTWEBOPS*"
+    },
+    {
+        name: "ANISH NARAYANAN",
+        team: "ORGANIZING COMMITTEE",
+        role: "HEAD",
+        image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
+        barcode: "*NITTFESTWEBOPS*"
+    },
+    {
+        name: "DHARUNIKA SARASWATHY",
+        team: "ORGANIZING COMMITTEE",
+        role: "HEAD",
+        image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
+        barcode: "*NITTFESTWEBOPS*"
+    },
+    {
+        name: "NAREN SRINIVAS",
+        team: "PRNC",
+        role: "HEAD",
+        image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
+        barcode: "*NITTFESTWEBOPS*"
+    },
+    {
+        name: "JEFFREY JAYAPACKIYARAJ",
+        team: "PRNC",
+        role: "HEAD",
+        image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
+        barcode: "*NITTFESTWEBOPS*"
+    },
+    {
+        name: "GUGHAN SRIDHAR",
+        team: "AMBIENCE",
+        role: "HEAD",
+        image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
+        barcode: "*NITTFESTWEBOPS*"
+    },
+    {
+        name: "NANDHINEE",
+        team: "AMBIENCE",
+        role: "HEAD",
+        image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
+        barcode: "*NITTFESTWEBOPS*"
+    },
 ];
 
 export default function Team() {
@@ -35,18 +165,61 @@ export default function Team() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const currentMember = teamMembers[currentIndex];
 
+    const nextMember = () => {
+
+        gsap.to(idCardRef.current, {
+            x: -300,
+            opacity: 0,
+            duration: 0.3,
+            onComplete: () => {
+                setCurrentIndex((prev) => (prev + 1) % teamMembers.length);
+
+                gsap.fromTo(
+                    idCardRef.current,
+                    { x: 300, opacity: 0 },
+                    { x: 0, opacity: 1, duration: 0.4 }
+                );
+            }
+        });
+
+    };
+
+    const prevMember = () => {
+
+        gsap.to(idCardRef.current, {
+            x: 300,
+            opacity: 0,
+            duration: 0.3,
+            onComplete: () => {
+                setCurrentIndex((prev) =>
+                    prev === 0 ? teamMembers.length - 1 : prev - 1
+                );
+
+                gsap.fromTo(
+                    idCardRef.current,
+                    { x: -300, opacity: 0 },
+                    { x: 0, opacity: 1, duration: 0.4 }
+                );
+            }
+        });
+
+    };
+
+
     useEffect(() => {
+
         const ctx = gsap.context(() => {
+
             const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-            // Animate windows staggering in
+            // Animate windows
             tl.fromTo(
                 [topWindowRef.current, mainWindowRef.current, terminalWindowRef.current],
                 { y: 50, opacity: 0, scale: 0.95 },
                 { y: 0, opacity: 1, scale: 1, duration: 0.6, stagger: 0.15 }
             );
 
-            // ID Card pops in
+            // ID card pop
             tl.fromTo(
                 idCardRef.current,
                 { scale: 0.5, opacity: 0, rotation: -10 },
@@ -54,7 +227,7 @@ export default function Team() {
                 "-=0.3"
             );
 
-            // Speech bubbles pop
+            // speech bubbles
             tl.fromTo(
                 [hqBubbleRef.current, alertBubbleRef.current],
                 { scale: 0, opacity: 0 },
@@ -62,26 +235,36 @@ export default function Team() {
                 "-=0.5"
             );
 
-            // Subtle float on ID card
+            // floating card
             gsap.to(idCardRef.current, {
-                y: -10,
-                rotation: -2,
-                duration: 3,
+                y: -6,
+                duration: 3.5,
                 repeat: -1,
                 yoyo: true,
-                ease: "sine.inOut",
-                delay: 1
+                ease: "sine.inOut"
             });
 
         }, pageRef);
 
-        return () => ctx.revert();
+
+        const handleKey = (e) => {
+            if (e.key === "ArrowRight") nextMember();
+            if (e.key === "ArrowLeft") prevMember();
+        };
+
+        window.addEventListener("keydown", handleKey);
+
+        return () => {
+            ctx.revert();
+            window.removeEventListener("keydown", handleKey);
+        };
     }, []);
 
     return (
         <div className="team-page" ref={pageRef}>
+
             {/* Top Left NF Logo */}
-            <a href="/" className="fixed top-4 left-4 md:top-8 md:left-8 z-100 cursor-pointer hover:scale-110 transition-transform duration-200">
+            <a href="/" className="fixed top-4 left-4 md:top-8 md:left-8 z-50 cursor-pointer hover:scale-110 transition-transform duration-200">
                 <img
                     src="/assets/landingpage/nf3dsvg.svg"
                     alt="NF Logo"
@@ -115,12 +298,11 @@ export default function Team() {
                             <span className="control minimize"></span>
                             <span className="control expand"></span>
                         </div>
-                        <div className="window-title">C:/HQ/WebOps/Team/profile</div>
-                        <div className="window-close-btn">X</div>
+                        <div className="window-title">C:/HQ/NITTFEST/Team/profile</div>
+                        <a href="/" prefetch={false} className="no-underline"><div className="window-close-btn hover:scale-110 transition-transform cursor-pointer">X</div></a>
                     </div>
                     <div className="window-content top-window-content">
-                        <span className="source-ip">SOURCE: 127.0.0.1</span>
-                        <span className="encryption-status">ENCRYPTION ACTIVE</span>
+                        <span className={`source-ip ${barlowCondensed.className}`}>SOURCE: 127.0.0.1</span>
                     </div>
                 </div>
 
@@ -133,13 +315,13 @@ export default function Team() {
                             <span className="control expand"></span>
                         </div>
                         <div className="window-title">CLASSIFIED.EXE</div>
-                        <div className="window-close-btn">X</div>
+                        <a href="/" prefetch={false} className="no-underline"><div className="window-close-btn hover:scale-110 transition-transform cursor-pointer">X</div></a>
                     </div>
                     <div className="window-content main-window-content">
                         <h1 className="team-title">THE TEAM</h1>
 
                         <div className="slider-area">
-                            <div className="arrow left-arrow">◀</div>
+                            <div className="arrow left-arrow" onClick={prevMember}>◀</div>
 
                             {/* The ID Card */}
                             <div className="id-card" ref={idCardRef}>
@@ -156,12 +338,24 @@ export default function Team() {
                                     </div>
                                     <div className="id-details-section">
                                         <div className="id-header">
-                                            <img src="/webops-logo.png" alt="NITTFEST WebOps" className="webops-logo" />
+                                            <img src="newlogo.png" alt="NITTFEST WebOps" className="webops-logo" />
                                         </div>
                                         <div className="access-title">ACCESS CARD</div>
                                         <div className="member-info">
-                                            <p>NAME : {currentMember.name}</p>
-                                            <p>ROLE : {currentMember.role}</p>
+                                            <p>
+                                                <span className="label">NAME :</span>
+                                                <span className="value">{currentMember.name}</span>
+                                            </p>
+                                            <p>
+                                                <span className="label">ROLE :</span>
+                                                <span className="value">{currentMember.role}</span>
+                                            </p>
+                                            {currentMember.team && (
+                                                <p>
+                                                    <span className="label">TEAM :</span>
+                                                    <span className="value">{currentMember.team}</span>
+                                                </p>
+                                            )}
                                         </div>
                                         <div className={`barcode ${barcodeFont.className}`}>
                                             <span>{currentMember.barcode}</span>
@@ -170,7 +364,7 @@ export default function Team() {
                                 </div>
                             </div>
 
-                            <div className="arrow right-arrow">▶</div>
+                            <div className="arrow right-arrow" onClick={nextMember}>▶</div>
                         </div>
 
                         {/* Server Status Footer */}
@@ -194,10 +388,10 @@ export default function Team() {
                 </div>
 
                 {/* Terminal Window */}
-                <div className="ui-window terminal-window" ref={terminalWindowRef}>
+                <div className={`ui-window terminal-window ${barlowCondensed.className}`} ref={terminalWindowRef}>
                     <div className="window-header terminal-header">
-                        <div className="window-title">terminal.exe</div>
-                        <div className="window-close-btn">X</div>
+                        <div className="window-title">Terminal.exe</div>
+                        <a href="/" prefetch={false} className="no-underline"><div className="window-close-btn hover:scale-110 transition-transform cursor-pointer">X</div></a>
                     </div>
                     <div className="window-content terminal-content">
                         <p>access_granted();</p>
@@ -207,8 +401,6 @@ export default function Team() {
                     </div>
                 </div>
             </div>
-
-            <div className="desktop-indicator">Desktop - 11</div>
         </div>
     );
 }
