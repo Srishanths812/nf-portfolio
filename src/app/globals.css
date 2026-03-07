@@ -161,6 +161,33 @@ h4,
   .font-orbitron {
     font-family: var(--font-orbitron), sans-serif;
   }
+
+  .comikaze-text {
+    font-family: "GoodTimes", sans-serif;
+    color: transparent;
+    /* Red base with black honeycomb overlay pattern generated natively via SVG data URI */
+    background-color: var(--color-nf-red-bright);
+    background-image: url("data:image/svg+xml,%3Csvg width='24' height='40' viewBox='0 0 24 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10l12-10 12 10v20l-12 10-12-10V10z' fill='none' stroke='%23330000' stroke-width='1.5' stroke-opacity='0.8'/%3E%3Cpath d='M12 30l12-10v-20L12-10 0 0v20z' fill='none' stroke='%23330000' stroke-width='1.5' stroke-opacity='0.8'/%3E%3C/svg%3E");
+    background-size: 16px;
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* Simulate the 3D dark metallic chrome and sharp neon-blue glowing stroke */
+    -webkit-text-stroke: 0.5px #f8fafc;
+    /* Thin silver interior line */
+    filter:
+      /* Thin dark edge to separate red inside from the metallic rim */
+      drop-shadow(1px 1px 0px #0f172a) drop-shadow(-1px -1px 0px #0f172a)
+      /* Primary stark white/silver outer highlight (top/left) */
+      drop-shadow(-1.5px -1.5px 0px #ffffff) drop-shadow(0px -1.5px 0px #ffffff) drop-shadow(-1.5px 0px 0px #ffffff)
+      /* Thinner dark blue steel drop (bottom/right) */
+      drop-shadow(2px 2px 0px #1e3a8a) drop-shadow(3px 3px 0px #1e40af)
+      /* Very tight, sharp cyan metallic bevel on the extreme bottom right */
+      drop-shadow(4px 4px 0px #38bdf8)
+      /* Ambient shadow */
+      drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.6));
+    display: inline-block;
+    letter-spacing: 0.1em;
+  }
 }
 
 @keyframes scroll {

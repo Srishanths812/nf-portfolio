@@ -103,12 +103,6 @@
   z-index: 20;
 }
 
-.spiderman-rope {
-  width: 2px;
-  height: 160px;
-  background: #fff;
-  transform-origin: top center;
-}
 
 .spiderman-character {
   opacity: 0;
@@ -131,29 +125,13 @@
   z-index: 25;
 }
 
-/* Tail pointing up-right to Spiderman */
+/* Tail pointing up-right to Spiderman - HIDDEN PER USER REQUEST */
 .speech-bubble::before {
-  content: '';
-  position: absolute;
-  top: -25px;
-  right: 40px;
-  width: 0;
-  height: 0;
-  border-left: 15px solid transparent;
-  border-right: 5px solid transparent;
-  border-bottom: 25px solid #000;
+  display: none;
 }
 
 .speech-bubble::after {
-  content: '';
-  position: absolute;
-  top: -18px;
-  right: 42px;
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 3px solid transparent;
-  border-bottom: 18px solid #fff;
+  display: none;
 }
 
 .speech-bubble span {
@@ -321,13 +299,10 @@
     width: 120px;
   }
 
-  .spiderman-rope {
-    height: 40px;
-  }
-
   .spiderman-container {
-    margin-top: -7px;
-    /* Offset the 7px black box-shadow border of the text box on very small screens */
+    margin-top: -65px;
+    z-index: 4;
+    /* Pull Spiderman up heavily on mobile and place behind the text box (z-index 5) */
   }
 
   .speech-bubble {

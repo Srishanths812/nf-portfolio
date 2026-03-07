@@ -3,7 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import gsap from "gsap";
+import localFont from 'next/font/local';
 import HighlightsPage from "./highlights/page";
+
+const goodTimesFont = localFont({
+  src: '../../public/fonts/GoodTimesRg-Regular.ttf',
+  display: 'swap',
+});
 import AboutUs from "./aboutus/page";
 import NITTFESTEvents from "./events/page";
 import SponsorsPage from "./sponsors/page";
@@ -73,8 +79,8 @@ export default function Home() {
         if (comikazefRef.current) {
           gsap.fromTo(
             comikazefRef.current,
-            { y: -500, opacity: 0 },
-            { y: 0, opacity: 1, duration: 1.0, ease: "back.out(1.7)", delay: 0.5 }
+            { yPercent: -150, opacity: 0 },
+            { yPercent: 0, opacity: 1, duration: 1.0, ease: "back.out(1.7)", delay: 0.5, force3D: true }
           );
         }
       });
@@ -205,14 +211,14 @@ export default function Home() {
           {/* Comic Characters and Date — Centered on screen */}
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none pt-[5vh]">
             <div className="relative w-full max-w-[1200px] h-[50vh] flex items-center justify-center">
-              <img
+              <h1
                 ref={comikazefRef}
-                src="/assets/landingpage/comikazef.png"
-                alt="ComiKaze"
-                className="absolute left-[50%] top-[-35%] w-[90vw] md:w-[800px] z-50 pointer-events-none opacity-0"
+                className={`comikaze-text ${goodTimesFont.className} absolute left-[50%] top-[-35%] text-[11vw] sm:text-[13vw] md:text-[8rem] z-50 pointer-events-none opacity-0 leading-none m-0 p-0 text-center w-full`}
                 style={{ transform: 'translate(-50%, -50%)' }}
-              />
-              <h2 className="absolute top-[-18%] left-1/2 transform -translate-x-1/2 text-[#5D1F1A] font-bangers text-2xl md:text-6xl drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)] tracking-wider z-50 text-center w-full px-4">
+              >
+                COMIKAZE
+              </h1>
+              <h2 className="absolute top-[-18%] md:top-[-5%] left-1/2 transform -translate-x-1/2 text-[#5D1F1A] font-bangers text-2xl md:text-6xl drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)] tracking-wider z-50 text-center w-full px-4">
                 MARCH 13-15
               </h2>
             </div>

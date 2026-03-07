@@ -56,7 +56,7 @@ export default function HighlightsPage() {
           alt="Cityscape Silhouettes"
           fill
           priority
-          className="object-cover object-bottom"
+          className="object-cover object-bottom md:object-bottom transform scale-[1.12] -translate-y-[6%] md:scale-100 md:translate-y-0"
         />
       </div>
 
@@ -156,7 +156,7 @@ export default function HighlightsPage() {
 
             {/* Extra comic accents */}
             <div className="absolute -top-4 -right-4 md:-top-5 md:-right-6 bg-white border-4 border-black text-red-600 text-sm md:text-lg font-sans font-black px-2 py-1 transform rotate-12 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] group-hover:rotate-0 transition-transform">
-              EXPLORE!
+              GALLERY
             </div>
           </a>
         </div>

@@ -299,7 +299,7 @@ export default function Team() {
                             <span className="control expand"></span>
                         </div>
                         <div className="window-title">C:/HQ/NITTFEST/Team/profile</div>
-                        <a href="/" prefetch={false} className="no-underline"><div className="window-close-btn hover:scale-110 transition-transform cursor-pointer">X</div></a>
+                        <a href="/" prefetch={false} className="no-underline ml-auto"><div className="window-close-btn hover:scale-110 transition-transform cursor-pointer">X</div></a>
                     </div>
                     <div className="window-content top-window-content">
                         <span className={`source-ip ${barlowCondensed.className}`}>SOURCE: 127.0.0.1</span>
@@ -315,7 +315,7 @@ export default function Team() {
                             <span className="control expand"></span>
                         </div>
                         <div className="window-title">CLASSIFIED.EXE</div>
-                        <a href="/" prefetch={false} className="no-underline"><div className="window-close-btn hover:scale-110 transition-transform cursor-pointer">X</div></a>
+                        <a href="/" prefetch={false} className="no-underline ml-auto"><div className="window-close-btn hover:scale-110 transition-transform cursor-pointer">X</div></a>
                     </div>
                     <div className="window-content main-window-content">
                         <h1 className="team-title">THE TEAM</h1>
@@ -391,7 +391,7 @@ export default function Team() {
                 <div className={`ui-window terminal-window ${barlowCondensed.className}`} ref={terminalWindowRef}>
                     <div className="window-header terminal-header">
                         <div className="window-title">Terminal.exe</div>
-                        <a href="/" prefetch={false} className="no-underline"><div className="window-close-btn hover:scale-110 transition-transform cursor-pointer">X</div></a>
+                        <a href="/" prefetch={false} className="no-underline ml-auto"><div className="window-close-btn hover:scale-110 transition-transform cursor-pointer">X</div></a>
                     </div>
                     <div className="window-content terminal-content">
                         <p>access_granted();</p>

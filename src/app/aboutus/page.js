@@ -180,7 +180,6 @@ export default function AboutUs() {
 
         {/* Spider-Man section */}
         <div className="spiderman-container">
-          {/* Rope */}\
           {/* Spider-Man */}
           <div className="spiderman-character" ref={spidermanRef}>
             <Image
