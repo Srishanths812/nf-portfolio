@@ -14,14 +14,12 @@ export default function HighlightsPage() {
   const containerRef = useRef(null);
 
   useGSAP(() => {
-    const scrollerNode = document.querySelector("#main-scroll-container");
-
+    // 1. Initial Load Sequence
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top 80%",
-        ...(scrollerNode && { scroller: scrollerNode }),
-      },
+      }
     });
 
     // Fade in background and move it up slightly for a parallax feel
@@ -55,6 +53,7 @@ export default function HighlightsPage() {
           src="/Hightlights background.svg"
           alt="Cityscape Silhouettes"
           fill
+          sizes="100vw"
           priority
           className="object-cover object-bottom md:object-bottom transform scale-[1.12] -translate-y-[6%] md:scale-100 md:translate-y-0"
         />
@@ -98,6 +97,7 @@ export default function HighlightsPage() {
               src="/image1.jpg"
               alt="H1"
               fill
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover transition-all duration-700 filter grayscale group-hover:grayscale-0 scale-[1.02] group-hover:scale-110"
             />
           </div>
@@ -110,6 +110,7 @@ export default function HighlightsPage() {
               src="/image2.jpg"
               alt="H2"
               fill
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover transition-all duration-700 filter grayscale group-hover:grayscale-0 scale-[1.02] group-hover:scale-110"
             />
             {/* Subtle color overlay to keep it "Dark Red" until hovered */}
@@ -127,6 +128,7 @@ export default function HighlightsPage() {
               src="/image3.jpg"
               alt="H3"
               fill
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover transition-all duration-700 filter grayscale group-hover:grayscale-0 scale-[1.02] group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-[#2a0a0a]/30 group-hover:bg-transparent transition-colors duration-500" />
@@ -140,6 +142,7 @@ export default function HighlightsPage() {
               src="/image4.jpg"
               alt="H4"
               fill
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover transition-all duration-700 filter grayscale group-hover:grayscale-0 scale-[1.02] group-hover:scale-110"
             />
           </div>

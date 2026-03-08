@@ -21,14 +21,11 @@ export default function NITTFESTEvents() {
   const buttonRef = useRef(null);
 
   useGSAP(() => {
-    const scrollerNode = document.querySelector("#main-scroll-container");
-
     // 1. Initial Load Sequence
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top 80%",
-        ...(scrollerNode && { scroller: scrollerNode }),
       }
     });
 

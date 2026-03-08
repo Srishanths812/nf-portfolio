@@ -44,15 +44,11 @@ export default function Home() {
     }
 
     // Reset scroll on load and temporarily lock it
-    if (mainScrollContainerRef.current) {
-      mainScrollContainerRef.current.scrollTo(0, 0);
-      mainScrollContainerRef.current.style.overflowY = "hidden";
-    }
+    window.scrollTo(0, 0);
+    document.body.style.overflowY = "hidden";
 
     // Unlock scroll immediately or after minor delay since background animation is removed
-    if (mainScrollContainerRef.current) {
-      mainScrollContainerRef.current.style.overflowY = "auto";
-    }
+    document.body.style.overflowY = "auto";
 
     let ctx = gsap.context(() => {
       // Delay animation slightly to ensure DOM is fully laid out by Next.js router
@@ -137,10 +133,10 @@ export default function Home() {
 
   useEffect(() => {
     if (isMenuOpen) {
-      if (mainScrollContainerRef.current) mainScrollContainerRef.current.style.overflowY = "hidden";
+      document.body.style.overflowY = "hidden";
       tl.current.play();
     } else {
-      if (mainScrollContainerRef.current) mainScrollContainerRef.current.style.overflowY = "auto";
+      document.body.style.overflowY = "auto";
       tl.current.reverse();
     }
   }, [isMenuOpen]);
@@ -161,7 +157,7 @@ export default function Home() {
   };
 
   return (
-    <div id="main-scroll-container" ref={mainScrollContainerRef} className="relative w-full h-screen overflow-y-auto overflow-x-hidden scroll-smooth">
+    <div id="main-scroll-container" ref={mainScrollContainerRef} className="relative w-full min-h-screen overflow-x-hidden scroll-smooth">
       {/* Persisting UI Elements */}
       {/* Top Left NF Logo */}
       <div className="fixed top-4 left-4 md:top-8 md:left-8 z-100 cursor-pointer hover:scale-110 transition-transform duration-200">
@@ -170,9 +166,7 @@ export default function Home() {
           alt="NF Logo"
           className="w-10 h-10 md:w-16 md:h-16 drop-shadow-lg"
           onClick={() => {
-            if (mainScrollContainerRef.current) {
-              mainScrollContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
         />
       </div>

@@ -13,7 +13,6 @@ if (typeof window !== "undefined") {
 
 export default function AboutUs() {
   const spidermanRef = useRef(null);
-  const ropeRef = useRef(null);
   const titleRef = useRef(null);
   const textBoxRef = useRef(null);
   const speechBubbleRef = useRef(null);
@@ -22,15 +21,13 @@ export default function AboutUs() {
   const skylineRef = useRef(null);
 
   useGSAP(() => {
-    const scrollerNode = document.querySelector("#main-scroll-container");
-
+    // 1. Main Container Animation
     // Master timeline for coordinated animations
     const tl = gsap.timeline({
       defaults: { ease: "power3.out" },
       scrollTrigger: {
         trigger: pageRef.current,
         start: "top 80%",
-        ...(scrollerNode && { scroller: scrollerNode }),
       }
     });
 
@@ -76,14 +73,6 @@ export default function AboutUs() {
         duration: 0.5,
         ease: "back.out(1.5)",
       },
-      "-=0.2"
-    );
-
-    // Spider-Man rope extends from top
-    tl.fromTo(
-      ropeRef.current,
-      { scaleY: 0, transformOrigin: "top center" },
-      { scaleY: 1, duration: 0.3, ease: "none" },
       "-=0.2"
     );
 

@@ -53,11 +53,6 @@ export default function RootLayout({
       </head>
       <body
         className={`${bangers.variable} ${roboto.variable} ${inter.variable} antialiased bg-comic-red`}
-        style={{
-          '--font-bangers': bangers.style.fontFamily,
-          '--font-roboto': roboto.style.fontFamily,
-          '--font-inter': inter.style.fontFamily,
-        } as React.CSSProperties}
       >
         <AuthProvider>
           {children}

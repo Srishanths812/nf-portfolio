@@ -23,26 +23,20 @@ const barlowCondensed = Barlow_Condensed({
 // Temporary placeholder data
 const teamMembers = [
     {
-        name: "THARUN AADESH",
-        role: "OVERALL COORDINATOR",
-        image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
-        barcode: "*NITTFESTWEBOPS*"
-    },
-    {
         name: "KETHAN REDDY",
         role: "CHAIRPERSON",
         image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
         barcode: "*NITTFESTWEBOPS*"
     },
     {
-        name: "SAICHARAN",
-        role: "TREASURER",
+        name: "THARUN AADESH",
+        role: "OVERALL COORDINATOR",
         image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
         barcode: "*NITTFESTWEBOPS*"
     },
     {
-        name: "NAMAN KUMAR",
-        role: "GENERAL SECRETARY",
+        name: "SAICHARAN",
+        role: "TREASURER",
         image: "/sanjai.png", // Assuming existence; fallback to silhouette via CSS if not used
         barcode: "*NITTFESTWEBOPS*"
     },
@@ -263,15 +257,6 @@ export default function Team() {
     return (
         <div className="team-page" ref={pageRef}>
 
-            {/* Top Left NF Logo */}
-            <a href="/" className="fixed top-4 left-4 md:top-8 md:left-8 z-50 cursor-pointer hover:scale-110 transition-transform duration-200">
-                <img
-                    src="/assets/landingpage/nf3dsvg.svg"
-                    alt="NF Logo"
-                    className="w-10 h-10 md:w-16 md:h-16 drop-shadow-lg"
-                />
-            </a>
-
             {/* Background with gradients is handled in CSS */}
 
             {/* Floating HQ Bubble */}
@@ -299,7 +284,7 @@ export default function Team() {
                             <span className="control expand"></span>
                         </div>
                         <div className="window-title">C:/HQ/NITTFEST/Team/profile</div>
-                        <a href="/" prefetch={false} className="no-underline ml-auto"><div className="window-close-btn hover:scale-110 transition-transform cursor-pointer">X</div></a>
+                        <a href="/" className="no-underline ml-auto"><div className="window-close-btn hover:scale-110 transition-transform cursor-pointer">X</div></a>
                     </div>
                     <div className="window-content top-window-content">
                         <span className={`source-ip ${barlowCondensed.className}`}>SOURCE: 127.0.0.1</span>
@@ -315,7 +300,7 @@ export default function Team() {
                             <span className="control expand"></span>
                         </div>
                         <div className="window-title">CLASSIFIED.EXE</div>
-                        <a href="/" prefetch={false} className="no-underline ml-auto"><div className="window-close-btn hover:scale-110 transition-transform cursor-pointer">X</div></a>
+                        <a href="/" className="no-underline ml-auto"><div className="window-close-btn hover:scale-110 transition-transform cursor-pointer">X</div></a>
                     </div>
                     <div className="window-content main-window-content">
                         <h1 className="team-title">THE TEAM</h1>
@@ -338,7 +323,7 @@ export default function Team() {
                                     </div>
                                     <div className="id-details-section">
                                         <div className="id-header">
-                                            <img src="newlogo.png" alt="NITTFEST WebOps" className="webops-logo" />
+                                            <img src="logo_real.png" alt="NITTFEST WebOps" className="webops-logo" />
                                         </div>
                                         <div className="access-title">ACCESS CARD</div>
                                         <div className="member-info">
@@ -346,16 +331,16 @@ export default function Team() {
                                                 <span className="label">NAME :</span>
                                                 <span className="value">{currentMember.name}</span>
                                             </p>
-                                            <p>
-                                                <span className="label">ROLE :</span>
-                                                <span className="value">{currentMember.role}</span>
-                                            </p>
                                             {currentMember.team && (
                                                 <p>
                                                     <span className="label">TEAM :</span>
                                                     <span className="value">{currentMember.team}</span>
                                                 </p>
                                             )}
+                                            <p>
+                                                <span className="label">ROLE :</span>
+                                                <span className="value">{currentMember.role}</span>
+                                            </p>
                                         </div>
                                         <div className={`barcode ${barcodeFont.className}`}>
                                             <span>{currentMember.barcode}</span>
@@ -391,7 +376,7 @@ export default function Team() {
                 <div className={`ui-window terminal-window ${barlowCondensed.className}`} ref={terminalWindowRef}>
                     <div className="window-header terminal-header">
                         <div className="window-title">Terminal.exe</div>
-                        <a href="/" prefetch={false} className="no-underline ml-auto"><div className="window-close-btn hover:scale-110 transition-transform cursor-pointer">X</div></a>
+                        <a href="/" className="no-underline ml-auto"><div className="window-close-btn hover:scale-110 transition-transform cursor-pointer">X</div></a>
                     </div>
                     <div className="window-content terminal-content">
                         <p>access_granted();</p>
