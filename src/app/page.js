@@ -19,7 +19,7 @@ export default function Home() {
   const nfLogoRef = useRef(null);
   const dottedTextureRef = useRef(null);
   const bgRef = useRef(null);
-  const comikazefRef = useRef(null);
+  const marvelRef = useRef(null);
   const mainScrollContainerRef = useRef(null);
 
   // Menu animation refs
@@ -62,6 +62,15 @@ export default function Home() {
           );
         }
 
+        // Marvel logo animation
+        if (marvelRef.current) {
+          gsap.fromTo(
+            marvelRef.current,
+            { scale: 0.5, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 1.2, ease: "power4.out", delay: 0.5 }
+          );
+        }
+
         // Dotted texture fades in after logo
         if (dottedTextureRef.current) {
           gsap.fromTo(
@@ -71,14 +80,6 @@ export default function Home() {
           );
         }
 
-        // Comikazef drop animation from top
-        if (comikazefRef.current) {
-          gsap.fromTo(
-            comikazefRef.current,
-            { yPercent: -150, opacity: 0 },
-            { yPercent: 0, opacity: 1, duration: 1.0, ease: "back.out(1.7)", delay: 0.5, force3D: true }
-          );
-        }
       });
     });
 
@@ -194,7 +195,7 @@ export default function Home() {
             className="relative w-full h-full block transform origin-right overflow-hidden"
           >
             <img
-              src="/assets/landingpage/landingggg.jpeg"
+              src="/assets/landingpage/landingpagebgfinal.png"
               alt="NITTFEST Landing Page"
               className="w-full h-full object-cover object-center md:object-bottom-right block"
             />
@@ -204,15 +205,21 @@ export default function Home() {
 
           {/* Comic Characters and Date — Centered on screen */}
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none pt-[5vh]">
-            <div className="relative w-full max-w-[1200px] h-[50vh] flex items-center justify-center">
+            <div className="relative w-full max-w-[1200px] h-[50vh] flex flex-col items-center justify-center">
               <h1
-                ref={comikazefRef}
-                className={`comikaze-text ${goodTimesFont.className} absolute left-[50%] top-[-35%] text-[11vw] sm:text-[13vw] md:text-[8rem] z-50 pointer-events-none opacity-0 leading-none m-0 p-0 text-center w-full`}
-                style={{ transform: 'translate(-50%, -50%)' }}
+                ref={marvelRef}
+                className="text-[15vw] md:text-[12rem] font-black tracking-tighter leading-none m-0 p-0 text-center w-full uppercase bg-clip-text text-transparent opacity-0 select-none"
+                style={{
+                  backgroundImage: 'url("https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHRraGI3NjExNHRraGI3NjExNHRraGI3NjExNHRraGI3NjExNHRraGI3NjExNHRraGZfaWQmZXA9djFfaW50ZXJuYWxfZ2lmX2J5X2lkJmN0PWc/3o7TKv6MgQfVf6HkLm/giphy.gif")',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  WebkitBackgroundClip: 'text',
+                  filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.3))'
+                }}
               >
-                COMIKAZE
+                MARVEL
               </h1>
-              <h2 className="absolute top-[-18%] md:top-[-5%] left-1/2 transform -translate-x-1/2 text-[#5D1F1A] font-bangers text-2xl md:text-6xl drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)] tracking-wider z-50 text-center w-full px-4">
+              <h2 className="text-[#FFD700] font-bangers text-3xl md:text-7xl drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)] tracking-widest z-50 text-center w-full px-4 mt-[-2%] italic">
                 MARCH 13-15
               </h2>
             </div>
