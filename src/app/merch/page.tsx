@@ -18,6 +18,7 @@ const sizes = [
   { size: "L", chest: '40"', length: '30"', shoulder: '19"' },
   { size: "XL", chest: '42"', length: '31"', shoulder: '20"' },
   { size: "XXL", chest: '44"', length: '32"', shoulder: '21"' },
+  { size: "XXXL", chest: '46"', length: '33"', shoulder: '22"' },
 ];
 
 declare global {
@@ -26,16 +27,114 @@ declare global {
   }
 }
 
+function MerchTimer() {
+  const [isMounted, setIsMounted] = useState(false);
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  useEffect(() => {
+    const targetDate = new Date("2026-03-11T23:59:59+05:30").getTime();
+
+    const updateTimer = () => {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((difference % (1000 * 60)) / 1000),
+        });
+      }
+    };
+
+    const initTimeout = setTimeout(() => {
+      setIsMounted(true);
+      updateTimer();
+    }, 0);
+
+    const interval = setInterval(updateTimer, 1000);
+
+    return () => {
+      clearTimeout(initTimeout);
+      clearInterval(interval);
+    };
+  }, []);
+
+  if (!isMounted) return null;
+
+  return (
+    <div className="bg-[#FFE500] border-4 border-black px-6 py-2 transform -skew-x-12 -rotate-2 shadow-[6px_6px_0_0_#000] inline-block animate-pulse">
+      <div className="flex flex-col items-center justify-center transform skew-x-12 rotate-2">
+        <span className="font-bangers text-black text-xs sm:text-sm tracking-widest mb-1" style={{ fontFamily: "Bangers, cursive" }}>TIME LEFT TO ORDER:</span>
+        <span className="font-bangers text-[#FF0000] text-xl sm:text-3xl tracking-wider drop-shadow-md" style={{ fontFamily: "Bangers, cursive" }}>
+          {String(timeLeft.days).padStart(2, '0')}d {String(timeLeft.hours).padStart(2, '0')}h {String(timeLeft.minutes).padStart(2, '0')}m {String(timeLeft.seconds).padStart(2, '0')}s
+        </span>
+      </div>
+    </div>
+  );
+}
+
+const getFrontImage = (branch: string) => {
+  switch (branch) {
+    case "Architecture": return "/blue grey ARCH_converted.png";
+    case "Chemical Engineering": return "/blue grey CHEM_converted.png";
+    case "Civil Engineering": return "/blue grey CIVIL_converted.png";
+    case "Computer Science and Engineering": return "/blue grey CSE_converted.png";
+    case "Electrical and Electronics Engineering": return "/blue grey EEE_converted.png";
+    case "Electronics and Communication Engineering": return "/blue grey ECE_converted.png";
+    case "Instrumentation and Control Engineering": return "/blue grey ICE_converted.png";
+    case "Mechanical Engineering": return "/blue grey MECH_converted.png";
+    case "Metallurgical and Materials Engineering": return "/blue grey META_converted.png";
+    case "Production Engineering": return "/blue grey DOPE_converted.png";
+    case "Computer Applications (MCA)": return "/blue grey MCA_converted.png";
+    case "Management Studies (MBA)": return "/blue grey MBA_converted.png";
+    case "Masters": return "/blue grey MASTERS_converted.png";
+    case "Research": return "/blue grey RESEARCH_converted.png";
+    case "ITEP": return "/blue grey ITEP_converted.png";
+    default: return "";
+  }
+};
+
+const getBackImage = (branch: string) => {
+  switch (branch) {
+    case "Architecture": return "/05 arch MOCK back_converted.png";
+    case "Chemical Engineering": return "/05 chem MOCK back_converted.png";
+    case "Civil Engineering": return "/05 civil MOCK back_converted.png";
+    case "Computer Science and Engineering": return "/05 cse MOCK back_converted.png";
+    case "Electrical and Electronics Engineering": return "/05 eee MOCK back_converted.png";
+    case "Electronics and Communication Engineering": return "/05 ece MOCK back_converted.png";
+    case "Instrumentation and Control Engineering": return "/05 ice MOCK back_converted.png";
+    case "Mechanical Engineering": return "/05 mech MOCK back_converted.png";
+    case "Metallurgical and Materials Engineering": return "/05 meta MOCK back_converted.png";
+    case "Production Engineering": return "/05 dope MOCK back_converted.png";
+    case "Computer Applications (MCA)": return "/05 mca MOCK back_converted.png";
+    case "Management Studies (MBA)": return "/05 mba MOCK back_converted.png";
+    case "Masters": return "/05 masters MOCK back_converted.png";
+    case "Research": return "/05 research MOCK back_converted.png";
+    case "ITEP": return "/05 itep MOCK back_converted.png";
+    default: return "";
+  }
+};
+
 function ShirtCard() {
   const { user, token, login } = useAuth();
   const router = useRouter();
-  const [showBack, setShowBack] = useState(false);
+  const [showBack, setShowBack] = useState(true);
   const [showSizeChart, setShowSizeChart] = useState(false);
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedSize1, setSelectedSize1] = useState<string | null>(null);
+  const [selectedSize2, setSelectedSize2] = useState<string | null>(null);
+  const [selectedBranch1, setSelectedBranch1] = useState<string>("");
+  const [selectedBranch2, setSelectedBranch2] = useState<string>("");
+  const [rollNumber2, setRollNumber2] = useState<string>("");
   const [count, setCount] = useState<number>(1);
   const [isPaying, setIsPaying] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
-
   useEffect(() => {
     // Load Razorpay script once
     if (typeof window === "undefined") return;
@@ -53,8 +152,18 @@ function ShirtCard() {
       return;
     }
 
-    if (!selectedSize) {
-      alert("Please select a size before continuing.");
+    if (!selectedSize1 || (count === 2 && !selectedSize2)) {
+      alert("Please select sizes before continuing.");
+      return;
+    }
+
+    if (!selectedBranch1 || (count === 2 && !selectedBranch2)) {
+      alert(count === 2 ? "Please select branches for both T-Shirts." : "Please select a branch.");
+      return;
+    }
+
+    if (count === 2 && !rollNumber2) {
+      alert("Please enter Roll Number for T-Shirt 2.");
       return;
     }
 
@@ -74,8 +183,10 @@ function ShirtCard() {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          size: selectedSize,
+          size1: selectedSize1,
+          branch1: selectedBranch1,
           count,
+          ...(count === 2 && { size2: selectedSize2, branch2: selectedBranch2, rollNumber2 }),
         }),
       });
 
@@ -99,8 +210,10 @@ function ShirtCard() {
           contact: user.phoneNumber || "",
         },
         notes: {
-          size: selectedSize,
+          size1: selectedSize1,
+          branch1: selectedBranch1,
           count,
+          ...(count === 2 && { size2: selectedSize2, branch2: selectedBranch2 }),
         },
         theme: {
           color: "#D00000",
@@ -117,9 +230,10 @@ function ShirtCard() {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
                 razorpay_signature: response.razorpay_signature,
-                size: selectedSize,
+                size1: selectedSize1,
                 count,
                 amount,
+                ...(count === 2 && { size2: selectedSize2, branch1: selectedBranch1, branch2: selectedBranch2, rollNumber2 }),
               }),
             });
 
@@ -211,11 +325,11 @@ function ShirtCard() {
           <div className="image-track" style={{ transform: showBack ? "translateX(-50%)" : "translateX(0%)" }}>
             <div className="image-slot">
               <span className="slide-label" style={{ color: 'black' }}>FRONT</span>
-              <img src={frontImg} alt="Front" />
+              <img src={getFrontImage(selectedBranch1) || "/front.png"} alt="Front" />
             </div>
             <div className="image-slot">
               <span className="slide-label" style={{ color: 'black' }}>BACK</span>
-              <img src={backImg} alt="Back" />
+              <img src={getBackImage(selectedBranch1) || "/back.png"} alt="Back" />
             </div>
           </div>
           <div className="toggle-row">
@@ -224,23 +338,135 @@ function ShirtCard() {
           </div>
         </div>
 
+        {/* T-Shirt Merch Box */}
         <div className="info-section">
           <p className="shirt-title">NF COMIC TEE</p>
-          <p className="shirt-price">1 for 260 Rs | 2 for 499 Rs</p>
+          <p className="shirt-price">1 for <del>275</del> 260 Rs | 2 for <del>550</del> 499</p>
           <div className="size-section-title" style={{ color: 'black' }}>SELECT COUNT</div>
           <div className="size-row" style={{ color: 'black' }}>
             {[1, 2].map(c => (
               <button key={c} className={`size-btn${count === c ? " selected" : ""}`} onClick={() => setCount(c)}>{c}</button>
             ))}
           </div>
-          <div className="size-section-title" style={{ color: 'black' }}>SELECT SIZE</div>
+          <div className="size-section-title" style={{ color: 'black' }}>SELECT SIZE {count === 2 && "T-SHIRT 1"}</div>
           <div className="size-row" style={{ color: 'black' }}>
-            {["XS", "S", "M", "L", "XL", "XXL"].map(s => (
-              <button key={s} className={`size-btn${selectedSize === s ? " selected" : ""}`} onClick={() => setSelectedSize(s)}>{s}</button>
+            {["XS", "S", "M", "L", "XL", "XXL", "XXXL"].map(s => (
+              <button key={`s1-${s}`} className={`size-btn${selectedSize1 === s ? " selected" : ""}`} onClick={() => setSelectedSize1(s)}>{s}</button>
             ))}
           </div>
+          <div className="size-section-title" style={{ color: 'black', marginTop: '12px' }}>
+            {count === 2 ? "SELECT BRANCH T-SHIRT 1" : "SELECT BRANCH"}
+          </div>
+          <div className="size-row" style={{ color: 'black', display: 'block' }}>
+            <select
+              className="branch-select"
+              value={selectedBranch1}
+              onChange={(e) => setSelectedBranch1(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '8px',
+                fontFamily: "'Bangers', cursive",
+                fontSize: '18px',
+                letterSpacing: '1px',
+                border: '2px solid #000',
+                borderRadius: '4px',
+                backgroundColor: '#fff',
+                boxShadow: '2px 2px 0 #000',
+                outline: 'none',
+                cursor: 'pointer'
+              }}
+            >
+              <option value="" disabled>Select Branch</option>
+              <option value="Architecture">Architecture</option>
+              <option value="Chemical Engineering">Chemical Engineering</option>
+              <option value="Civil Engineering">Civil Engineering</option>
+              <option value="Computer Science and Engineering">Computer Science and Engineering</option>
+              <option value="Electrical and Electronics Engineering">Electrical and Electronics Engineering</option>
+              <option value="Electronics and Communication Engineering">Electronics and Communication Engineering</option>
+              <option value="Instrumentation and Control Engineering">Instrumentation and Control Engineering</option>
+              <option value="Mechanical Engineering">Mechanical Engineering</option>
+              <option value="Metallurgical and Materials Engineering">Metallurgical and Materials Engineering</option>
+              <option value="Production Engineering">Production Engineering</option>
+              <option value="Computer Applications (MCA)">Computer Applications (MCA)</option>
+              <option value="Management Studies (MBA)">Management Studies (MBA)</option>
+              <option value="Masters">Masters</option>
+              <option value="Research">Research</option>
+              <option value="ITEP">ITEP</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          {count === 2 && (
+            <>
+              <div className="size-section-title" style={{ color: 'black', marginTop: '12px' }}>SELECT SIZE T-SHIRT 2</div>
+              <div className="size-row" style={{ color: 'black' }}>
+                {["XS", "S", "M", "L", "XL", "XXL", "XXXL"].map(s => (
+                  <button key={`s2-${s}`} className={`size-btn${selectedSize2 === s ? " selected" : ""}`} onClick={() => setSelectedSize2(s)}>{s}</button>
+                ))}
+              </div>
+              <div className="size-section-title" style={{ color: 'black', marginTop: '12px' }}>SELECT BRANCH T-SHIRT 2</div>
+              <div className="size-row" style={{ color: 'black', display: 'block' }}>
+                <select
+                  className="branch-select"
+                  value={selectedBranch2}
+                  onChange={(e) => setSelectedBranch2(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '8px',
+                    fontFamily: "'Bangers', cursive",
+                    fontSize: '18px',
+                    letterSpacing: '1px',
+                    border: '2px solid #000',
+                    borderRadius: '4px',
+                    backgroundColor: '#fff',
+                    boxShadow: '2px 2px 0 #000',
+                    outline: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <option value="" disabled>Select Branch</option>
+                  <option value="Architecture">Architecture</option>
+                  <option value="Chemical Engineering">Chemical Engineering</option>
+                  <option value="Civil Engineering">Civil Engineering</option>
+                  <option value="Computer Science and Engineering">Computer Science and Engineering</option>
+                  <option value="Electrical and Electronics Engineering">Electrical and Electronics Engineering</option>
+                  <option value="Electronics and Communication Engineering">Electronics and Communication Engineering</option>
+                  <option value="Instrumentation and Control Engineering">Instrumentation and Control Engineering</option>
+                  <option value="Mechanical Engineering">Mechanical Engineering</option>
+                  <option value="Metallurgical and Materials Engineering">Metallurgical and Materials Engineering</option>
+                  <option value="Production Engineering">Production Engineering</option>
+                  <option value="Computer Applications (MCA)">Computer Applications (MCA)</option>
+                  <option value="Management Studies (MBA)">Management Studies (MBA)</option>
+                  <option value="Masters">Masters</option>
+                  <option value="Research">Research</option>
+                  <option value="ITEP">ITEP</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div className="size-section-title" style={{ color: 'black', marginTop: '12px' }}>ROLL NUMBER T-SHIRT 2</div>
+              <div className="size-row" style={{ color: 'black', display: 'block' }}>
+                <input
+                  type="text"
+                  value={rollNumber2}
+                  onChange={(e) => setRollNumber2(e.target.value)}
+                  placeholder="e.g. 106123456"
+                  style={{
+                    width: '100%',
+                    padding: '8px',
+                    fontFamily: "'Bangers', cursive",
+                    fontSize: '18px',
+                    letterSpacing: '1px',
+                    border: '2px solid #000',
+                    borderRadius: '4px',
+                    backgroundColor: '#fff',
+                    boxShadow: '2px 2px 0 #000',
+                    outline: 'none',
+                  }}
+                />
+              </div>
+            </>
+          )}
 
-          <button className="size-chart-btn" onClick={() => setShowSizeChart(true)}>📏 Size Chart (dot guess, measure!)</button>
+          <button className="size-chart-btn" onClick={() => setShowSizeChart(true)}>📏 Size Chart (don't measure!)</button>
 
           <button className="buy-btn" onClick={handleBuyNow} disabled={isPaying}>
             {isPaying ? "PROCESSING..." : "BUY NOW!"}
@@ -382,9 +608,16 @@ export default function MerchPage() {
             borderRadius: 4,
             transform: "rotate(-1deg)",
           }}>✦ MERCHANDISE ✦</div>
+
+          <div className="sm:hidden mt-4">
+            <MerchTimer />
+          </div>
         </div>
 
         <div className="absolute top-0 right-0 sm:static flex items-center justify-end z-50">
+          <div className="hidden sm:block mr-4">
+            <MerchTimer />
+          </div>
           {isLoading ? (
             <span style={{ fontFamily: "'Comic Neue',cursive", color: "#fff" }}>Checking login...</span>
           ) : user ? (
@@ -414,3 +647,4 @@ export default function MerchPage() {
     </div>
   );
 }
+
