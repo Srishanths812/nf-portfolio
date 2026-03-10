@@ -190,7 +190,7 @@ export default function Home() {
             <img
               src="/assets/landingpage/landingpagebgfinal.png"
               alt="NITTFEST Landing Page"
-              className="w-full h-full object-cover object-center md:object-bottom-right block"
+              className="w-full h-full object-cover object-center block"
             />
           </div>
 
@@ -200,7 +200,7 @@ export default function Home() {
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none pt-[5vh]">
             <div className="relative w-full max-w-[1200px] h-[50vh] flex items-center justify-center">
               <h2
-                className="absolute top-[-18%] md:top-[-5%] left-1/2 transform -translate-x-1/2 font-bangers text-4xl md:text-8xl tracking-widest z-50 text-center w-full px-4"
+                className="absolute top-[15%] md:top-[12%] left-1/2 transform -translate-x-1/2 font-bangers text-4xl md:text-8xl tracking-widest z-50 text-center w-full px-4"
                 style={{
                   color: '#FFD700',
                   WebkitTextStroke: '2px black',
@@ -279,23 +279,25 @@ export default function Home() {
                   />
 
                   {[
-                    { text: "Home", id: "home", x: 7.16, y: 34.55, rot: -3.8, fontSize: "clamp(18px, 3cqw, 30px)" },
-                    { text: "Highlights", id: "highlights", x: 17.02, y: 49.56, rot: 270, fontSize: "clamp(18px, 3.5cqw, 35px)" },
-                    { text: "About US", id: "aboutus", x: 29.84, y: 33.56, rot: 3.3, fontSize: "clamp(18px, 3.5cqw, 35px)" },
-                    { text: "Events", id: "events", x: 42.59, y: 45.81, rot: -87, fontSize: "clamp(18px, 3cqw, 30px)" },
-                    { text: "Sponsors", id: "sponsors", x: 47.62, y: 52.81, rot: -85, fontSize: "clamp(18px, 3cqw, 30px)" },
-                    { text: "Our Team", path: "/team", x: 60.30, y: 35.43, rot: -2.5, fontSize: "clamp(22px, 3.5cqw, 35px)" },
-                    { text: "Contact Us", path: "/contact", x: 73.95, y: 42.81, rot: -90, fontSize: "clamp(18px, 3.2cqw, 32px)" },
-                    { text: "Merchandise", path: "/merch", x: 79.80, y: 53.80, rot: -90, fontSize: "clamp(18px, 3cqw, 30px)" },
-                    { text: "Support", path: "/support", x: 92.80, y: 61.80, rot: -97, fontSize: "clamp(18px, 3cqw, 30px)" }
+                    { text: "Home", id: "home", x: 7.16, y: 34.55, rot: -3.8, fontSize: "clamp(18px, 3cqw, 30px)", w: "12%", h: "70%" },
+                    { text: "Highlights", id: "highlights", x: 17.02, y: 49.56, rot: 270, fontSize: "clamp(18px, 3.5cqw, 35px)", w: "60%", h: "10%" },
+                    { text: "About US", id: "aboutus", x: 29.84, y: 33.56, rot: 3.3, fontSize: "clamp(18px, 3.5cqw, 35px)", w: "12%", h: "70%" },
+                    { text: "Events", id: "events", x: 42.59, y: 45.81, rot: -87, fontSize: "clamp(18px, 3cqw, 30px)", w: "60%", h: "10%" },
+                    { text: "Sponsors", id: "sponsors", x: 47.62, y: 52.81, rot: -85, fontSize: "clamp(18px, 3cqw, 30px)", w: "50%", h: "10%" },
+                    { text: "Our Team", path: "/team", x: 60.30, y: 35.43, rot: -2.5, fontSize: "clamp(22px, 3.5cqw, 35px)", w: "12%", h: "70%" },
+                    { text: "Contact Us", path: "/contact", x: 73.95, y: 42.81, rot: -90, fontSize: "clamp(18px, 3.2cqw, 32px)", w: "60%", h: "10%" },
+                    { text: "Merchandise", path: "/merch", x: 79.80, y: 53.80, rot: -90, fontSize: "clamp(18px, 3cqw, 30px)", w: "60%", h: "22%" },
+                    { text: "Support", path: "/support", x: 92.80, y: 61.80, rot: -97, fontSize: "clamp(18px, 3cqw, 30px)", w: "50%", h: "20%" }
                   ].map((item, i) => (
                     <div
                       key={i}
-                      onClick={() => item.path ? (window.location.href = item.path) : scrollToSection(item.id)}
-                      className="absolute text-white comic-text font-bold text-center cursor-pointer transition-colors duration-300 hover:text-yellow-400 z-10 whitespace-pre-line"
+                      onClick={() => item.path ? router.push(item.path) : scrollToSection(item.id)}
+                      className="absolute text-white comic-text font-bold text-center cursor-pointer transition-colors duration-300 hover:text-yellow-400 z-10 whitespace-pre-line flex items-center justify-center"
                       style={{
                         left: `${item.x}%`,
                         top: `${item.y}%`,
+                        width: item.w,
+                        height: item.h,
                         transform: `translate(-50%, -50%) rotate(${item.rot}deg)`,
                         fontSize: item.fontSize,
                         lineHeight: "1.1",
